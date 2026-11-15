@@ -3700,7 +3700,7 @@ var X56Version = {
 window.X56Version = X56Version;
 
 X56.inits.push(function () {
-  window.XZ_VER = "10.1.0 PRO";
+  window.XZ_VER = "10.1.1 PRO";
   try { document.title = "杭州西子实验学校模拟器 5.6"; } catch (e) {}
 });
 
