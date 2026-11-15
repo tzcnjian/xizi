@@ -3254,10 +3254,18 @@ function bgmToggle(){
  if(BGM_ON)bgmPlay();else bgmPause();
  bgmSave();bgmRender();
 }
+/* 10.0.13：音频源既接受 base64，也接受相对路径。
+   原来只认 BGM_B64[i]，逼得两首额外歌曲的 mp3 只能 base64 内联进
+   index.html，首屏白多 9.3 MB。现在给的是 URL（./ 开头或带协议）就直接用，否则维持旧行为。 */
+function bgmSrc(v){
+ if(!v)return '';
+ if(/^(?:\.{0,2}\/|[a-z][a-z0-9+.-]*:)/i.test(v))return v;
+ return v;
+}
 function bgmSwitch(i){
  if(i<0)i=BGM_LIST.length-1;if(i>=BGM_LIST.length)i=0;
  BGM_IDX=i;
- if(BGM_AUD)BGM_AUD.src=BGM_B64[i];
+ if(BGM_AUD)BGM_AUD.src=bgmSrc(BGM_B64[i]);
  if(BGM_ON)bgmPlay();
  bgmSave();bgmRender();
 }
@@ -3308,7 +3316,7 @@ function bgmInit(){
  try{
   BGM_AUD=document.createElement('audio');
   BGM_AUD.preload='auto';BGM_AUD.volume=BGM_VOL;
-  BGM_AUD.src=BGM_B64[BGM_IDX];
+  BGM_AUD.src=bgmSrc(BGM_B64[BGM_IDX]);
   BGM_AUD.addEventListener('ended',function(){bgmSwitch((BGM_IDX+1)%BGM_LIST.length);});
   document.body.appendChild(BGM_AUD);
   var once=function(){
@@ -5158,7 +5166,7 @@ try{lyricUpdate();}catch(e){}
    title.style.cssText='position:relative;z-index:2;text-align:center;margin-bottom:40px;animation:titleFadeIn 1.2s ease-out';
    title.innerHTML='<div style="font-size:56px;font-weight:900;color:#fff;text-shadow:0 4px 20px rgba(0,0,0,.8),0 0 40px rgba(124,156,255,.4);letter-spacing:4px">杭州西子实验学校</div>'+
     '<div style="font-size:32px;font-weight:700;color:#ffd166;text-shadow:0 2px 10px rgba(0,0,0,.6);margin-top:8px;letter-spacing:8px">模拟器</div>'+
-    '<div style="font-size:16px;color:rgba(255,255,255,.6);margin-top:12px;letter-spacing:2px">Version 10.0.11 PRO</div>';
+    '<div style="font-size:16px;color:rgba(255,255,255,.6);margin-top:12px;letter-spacing:2px">Version 10.0.13 PRO</div>';
    splash.appendChild(title);
    /* 按钮组 */
    var btnGroup=document.createElement('div');
@@ -7102,7 +7110,7 @@ function Q_prev(){bgmSwitch((BGM_IDX-1+BGM_LIST.length)%BGM_LIST.length);setTime
    ================================================================ */
 var XZ561={ver:'5.5.6.888'};
 window.XZ_NEW_START=true; /* 通知旧代码：使用新版主视觉开始界面 */
-window.XZ_VER='10.0.11 PRO';
+window.XZ_VER='10.0.13 PRO';
 
 /* ================================================================
    ① 上课铃 / 下课铃（bell_src.m4a，纯本地，无网络请求）
@@ -10971,10 +10979,23 @@ window.XZ99903=true;
 var OPENING_CFG={src:'assets/opening.mp4',loopAt:17,pauseMs:3000,btnAt:9,frameRate:15,btnFrame:135};
 var _ov=null,_btnShown=false,_held=false,_holdTimer=null;
 
+/* 10.0.13：隐藏视频要把解码缓冲一起释放。
+   只 pause() 不释放解码表面，960×544 的片头常驻 100 MB 以上。
+   清 src 再 load() 才能让浏览器立刻回收解码器。 */
+function releaseVideoEl(v){
+ try{ if(!v)return; v.pause(); v.removeAttribute('src'); v.load(); }catch(e){}
+}
+/* 片头视频的 src 来源：OPENING_B64 既可能是 base64，也可能是相对路径（10.0.13 单文件版会内联） */
+function openingVideoSrc(){
+ var s=window.OPENING_B64||'';
+ if(!s)return '';
+ return /^(?:\.{0,2}\/|[a-z][a-z0-9+.-]*:)/i.test(s)? s : s;
+}
+
 /* ================= 帧动画模式（单文件版） ================= */
 var _OF={on:false,cv:null,ctx:null,imgs:[],cur:0,timer:null,startTime:0,audCtx:null,buf:null,src:null,sound:false,loading:0,started:false};
 function startOpeningFrames888(){
- var v=document.getElementById('openingVideo');if(v)v.style.display='none';
+ var v=document.getElementById('openingVideo');if(v){v.style.display='none';releaseVideoEl(v);}
  var ld=document.getElementById('heroVideoLoading');if(ld)ld.style.display='none';
  var wrap=document.getElementById('heroVideo');
  if(!wrap)return;
@@ -11300,7 +11321,11 @@ function confirmRotate(){
    framesLoop888();
   }else{
    var v=_ov;
-   if(v){try{v.currentTime=0;v.muted=true;v.play();}catch(e){}}
+   if(v){try{
+     /* 10.0.13：进了游戏后片头视频的 src 被释放过，回来时要重新挂上 */
+     if(!v.getAttribute('src')){var _s=openingVideoSrc();if(_s)v.src=_s;}
+     v.currentTime=0;v.muted=true;v.play();
+   }catch(e){}}
    var sb=document.getElementById('heroSoundBtn');if(sb)sb.textContent='🔇';
   }
   try{applyTheme();}catch(e){}
@@ -11310,7 +11335,10 @@ function confirmRotate(){
 (function(){
  var _osc=window.showCharCreate||function(){};
  window.showCharCreate=function(){
-  var hp=document.getElementById('heroPanel');if(hp)hp.style.display='none';
+  var hp=document.getElementById('heroPanel');if(hp){hp.style.display='none';}
+  /* 10.0.13：进角色创建后，片头视频不会再用到了，连解码缓冲一起释放 */
+  releaseVideoEl(document.getElementById('openingVideo'));
+  releaseVideoEl(document.querySelector('#heroPanel video'));
   var cp=document.getElementById('charPanel');if(cp)cp.style.display='block';
   var game=document.getElementById('game');if(game)game.style.display='none';
   var st=document.getElementById('start');if(st)st.classList.add('show');
