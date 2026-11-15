@@ -1,9 +1,9 @@
 
-/* ===== X580 10.1.2 / X581 10.1.2 PRO ===== */
+/* ===== X580 10.1.3 / X581 10.1.3 PRO ===== */
 
 /* ===== X580/581 fragment: patch580_core.js ===== */
 /* ============================================================
-   X580 · 10.1.2 基石补丁 · 核心层
+   X580 · 10.1.3 基石补丁 · 核心层
    职责：FAB 收敛 / 弹窗互斥 / 开始页入口恢复 / 手机竖屏引导 /
         570 各模块动作接入精力门控（防刷）
    哨兵防重；只增不删；全部命名空间 X580。
@@ -12,7 +12,7 @@
   if (window.__X580_CORE__) return;
   window.__X580_CORE__ = true;
   var X580 = (window.X580 = window.X580 || {});
-  X580.ver = "10.1.2";
+  X580.ver = "10.1.3";
 
   function $(id) { return document.getElementById(id); }
   function $a(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
@@ -189,24 +189,24 @@
      ------------------------------------------------------------ */
   function forceVersion() {
     try {
-      window.XZ_VER = "10.1.2";
-      if (window.X570) X570.ver = "10.1.2";
+      window.XZ_VER = "10.1.3";
+      if (window.X570) X570.ver = "10.1.3";
       var hv = $("heroVersion");
-      if (hv && hv.textContent.indexOf("10.1.2") < 0) hv.textContent = "Version 10.1.2 基石";
-      if (document.title.indexOf("10.1.2") < 0 && /杭州西子实验学校模拟器/.test(document.title)) {
-        document.title = "杭州西子实验学校模拟器 10.1.2 基石";
+      if (hv && hv.textContent.indexOf("10.1.3") < 0) hv.textContent = "Version 10.1.3 基石";
+      if (document.title.indexOf("10.1.3") < 0 && /杭州西子实验学校模拟器/.test(document.title)) {
+        document.title = "杭州西子实验学校模拟器 10.1.3 基石";
       }
       /* 570 层 X56Hero 会把 .hero-version / .x56-badge 改回旧版本号，统一覆盖 */
       var hvs = document.querySelectorAll(".hero-version");
       for (var i = 0; i < hvs.length; i++) {
         if (hvs[i].textContent && hvs[i].textContent.indexOf("5.7.0") >= 0)
-          hvs[i].textContent = hvs[i].textContent.replace(/5\.7\.0[^\s<]*/g, "10.1.2 基石");
+          hvs[i].textContent = hvs[i].textContent.replace(/5\.7\.0[^\s<]*/g, "10.1.3 基石");
       }
       var bds = document.querySelectorAll(".x56-badge, .hero-ver-badge, [class*='badge'][class*='ver']");
       for (var j = 0; j < bds.length; j++) {
         var b = bds[j];
         if (b.textContent && /5\.7\.0/.test(b.textContent)) {
-          b.textContent = b.textContent.replace(/5\.7\.0/g, "10.1.2").replace(/心之所向\s*·?\s*PRO\s*收官/g, "基石");
+          b.textContent = b.textContent.replace(/5\.7\.0/g, "10.1.3").replace(/心之所向\s*·?\s*PRO\s*收官/g, "基石");
         }
       }
       /* 兜底：开始页范围内任何只显示 5.7.0 的小徽标（限定 start，避免误改更新日志） */
@@ -216,7 +216,7 @@
         for (var k = 0; k < all.length; k++) {
           var el = all[k];
           if (el.children.length === 0 && el.textContent && /^\s*5\.7\.0\s*[^0-9]{0,12}\s*$/.test(el.textContent)) {
-            el.textContent = el.textContent.replace("5.7.0", "10.1.2");
+            el.textContent = el.textContent.replace("5.7.0", "10.1.3");
           }
         }
       }
@@ -424,7 +424,7 @@
 
 /* ===== X580/581 fragment: patch580_ai.js ===== */
 /* ============================================================
-   X580 · 10.1.2 核心补丁 · AI 对话大扩容
+   X580 · 10.1.3 核心补丁 · AI 对话大扩容
    - 在既有 XZ_AI_INTENTS 基础上“只增不删”，按 id 去重后 push
    - 每条意图：kws 用 | 分隔的常用问法（覆盖 1000+ 说法），
      rep.cold/mid/warm 各 3 条，按好感度 & 性格返回
@@ -1318,7 +1318,7 @@ window.X580_AI_REG([
 
 /* ===== X580/581 fragment: patch580_grad.js ===== */
 /* ============================================================
-   X580 · 10.1.2 核心补丁 · 毕业 / 出路 / 大学库 / 高考题库扩容
+   X580 · 10.1.3 核心补丁 · 毕业 / 出路 / 大学库 / 高考题库扩容
    - 向既有 UNI 大学库、MC 高考题库“只增不删”地 push
    - 新增毕业多结局引擎：毕业典礼→高考→四条出路（升学/留学/就业/复读）
    - 大学库大幅扩充（全国 + 浙江本地，按录取分参考）
@@ -2049,7 +2049,7 @@ window.X580_AI_REG([
       '<div class="x580-ep-title">「' + epilogueTitle(score, kind) + '」</div>' +
       '<div class="x580-medals">' + medals.map(function (m) { return '<span class="x580-medal">' + m + '</span>'; }).join("") + '</div>' +
       '<div class="x580-ep-body">' + epilogueBody(kind, score, major, lover, friends) + '</div>' +
-      '<div class="dim small" style="text-align:center;margin-top:10px">愿你走出半生，归来仍是少年。<br>—— 杭州西子实验学校模拟器 · 10.1.2</div>' +
+      '<div class="dim small" style="text-align:center;margin-top:10px">愿你走出半生，归来仍是少年。<br>—— 杭州西子实验学校模拟器 · 10.1.3</div>' +
       '</div>' +
       '<button class="xz-bigbtn blue" onclick="X580Grad.toMenu()">返回主菜单 / 重新开始</button>' +
       '<button class="gbtn" onclick="closeModal()">留在校园再逛逛</button>';
@@ -2140,7 +2140,7 @@ window.X580_AI_REG([
 
 /* ===== X580/581 fragment: patch580_quiz.js ===== */
 /* ============================================================
-   X580 · 10.1.2 课堂测试题库 / 课堂小测引擎（第一部分：引擎 + 语文/数学/英语）
+   X580 · 10.1.3 课堂测试题库 / 课堂小测引擎（第一部分：引擎 + 语文/数学/英语）
    - 向既有 DAILY_QUESTIONS 只增不删地 push
    - 新增 X580Quiz：可按科目开卷、限时、计分、精力门控、知识奖励
    - 题目均为真实高中知识题，非占位
@@ -2494,7 +2494,7 @@ window.X580_AI_REG([
 
 /* ===== X580/581 fragment: patch580_quiz2.js ===== */
 /* ============================================================
-   X580 · 10.1.2 课堂测试题库（第二部分：理科 物理/化学/生物）
+   X580 · 10.1.3 课堂测试题库（第二部分：理科 物理/化学/生物）
    ============================================================ */
 (function () {
   if (window.__X580_QUIZ2__) return;
@@ -2606,7 +2606,7 @@ window.X580_AI_REG([
 
 /* ===== X580/581 fragment: patch580_quiz3.js ===== */
 /* ============================================================
-   X580 · 10.1.2 课堂测试题库（第三部分：文科 政治/历史/地理/技术）
+   X580 · 10.1.3 课堂测试题库（第三部分：文科 政治/历史/地理/技术）
    ============================================================ */
 (function () {
   if (window.__X580_QUIZ3__) return;
@@ -2749,7 +2749,7 @@ window.X580_AI_REG([
 
 /* ===== X580/581 fragment: patch580_quiz4.js ===== */
 /* ============================================================
-   X580 · 10.1.2 课堂测试题库（第四部分：生活常识 / 心理与安全）
+   X580 · 10.1.3 课堂测试题库（第四部分：生活常识 / 心理与安全）
    ============================================================ */
 (function () {
   if (window.__X580_QUIZ4__) return;
@@ -2830,7 +2830,7 @@ window.X580_AI_REG([
 
 /* ===== X580/581 fragment: patch580_quiz_bank.js ===== */
 /* ============================================================
-   X580 · 10.1.2 自动生成的真实题库（数理化专项，答案经计算正确）
+   X580 · 10.1.3 自动生成的真实题库（数理化专项，答案经计算正确）
    共 8625 题；由 _gen_quiz.js 生成，注册进 X580Quiz。
    ============================================================ */
 (function(){
@@ -11469,7 +11469,7 @@ window.X580_AI_REG([
 
 /* ===== X580/581 fragment: patch580_quiz5.js ===== */
 /* ============================================================
-   X580 · 10.1.2 题库（五）英语词汇 / 语文成语古诗 / 生活常识
+   X580 · 10.1.3 题库（五）英语词汇 / 语文成语古诗 / 生活常识
    手写真题，builder 自动打乱选项并计算正确下标，保证答案正确。
    ============================================================ */
 (function () {
@@ -11788,7 +11788,7 @@ window.X580_AI_REG([
 
 /* ===== X580/581 fragment: patch580_ai2.js ===== */
 /* ============================================================
-   X580 · 10.1.2 AI 对话扩容（二期）
+   X580 · 10.1.3 AI 对话扩容（二期）
    继续只增不删，按 id 去重注册；覆盖学业/情绪/兴趣/关系/热梗等。
    每条意图：kws 多种说法，rep.cold/mid/warm 各 3 条，按好感度返回。
    ============================================================ */
@@ -12590,7 +12590,7 @@ window.X580_AI_REG([
 
 /* ===== X580/581 fragment: patch582_ai_bank.js ===== */
 /* ============================================================
-   X582 · 10.1.2 PRO · AI 聊天真实语料大扩容（批次 C~L）
+   X582 · 10.1.3 PRO · AI 聊天真实语料大扩容（批次 C~L）
    只增不删：通过 X580_AI_REG 追加意图到 XZ_AI_INTENTS，按 id 去重。
    每条意图：kws 多个常用问法；rep.cold/mid/warm 按好感度三档，
    性格点缀（傲娇/温柔/内向/开朗）由基座 xzAIReply 统一处理。
@@ -13181,7 +13181,7 @@ window.X580_AI_REG([
 
 /* ===== X580/581 fragment: patch582_ai_bank2.js ===== */
 /* ============================================================
-   X582 · 10.1.2 PRO · AI 聊天真实语料第二批（批次 M~S）
+   X582 · 10.1.3 PRO · AI 聊天真实语料第二批（批次 M~S）
    覆盖第一批遗漏：外貌/穿搭/星座MBTI/值日/借文具/帮带/AA/
    考试季祝福/请假/拖堂/图书馆/毕业季/志愿填报/考场上岸 等。
    只增不删，经 X580_AI_REG 去重追加。
@@ -13424,7 +13424,7 @@ window.X580_AI_REG([
 
 /* ===== X580/581 fragment: patch582_content.js ===== */
 /* ============================================================
-   X582 · 10.1.2 PRO · 联动真实内容库
+   X582 · 10.1.3 PRO · 联动真实内容库
    - X582_CONTENT.news：校园早新闻 / 晚间新闻（导演引擎 morningNews/eveningNews 读取）
    - X582_CONTENT.openers / questions：NPC 主动消息语料（AI 主动聊天读取）
    - 大学库：向 window.UNI 追加各层次（尤其浙江本地二本/民办/高职），
@@ -13676,7 +13676,7 @@ window.X580_AI_REG([
 
 /* ===== X580/581 fragment: patch582_quiz_bank2.js ===== */
 /* ============================================================
-   X582 · 10.1.2 PRO · 人工精选题库（九科素养 + 真实高考风格）
+   X582 · 10.1.3 PRO · 人工精选题库（九科素养 + 真实高考风格）
    自动生成的数理化题库之外，补齐语文/英语/历史/地理/政治/生物/
    化学/物理概念/数学综合等"非纯计算"题，答案人工核对。
    结构：{q, a:[4], c:正确下标, sub:"学科"}，注册进 X580Quiz.add。
@@ -13832,7 +13832,7 @@ window.X580_AI_REG([
 
 /* ===== X580/581 fragment: patch582_quiz_bank3.js ===== */
 /* ============================================================
-   X582 · 10.1.2 PRO · 自动生成多题型计算题库（答案经程序核验）
+   X582 · 10.1.3 PRO · 自动生成多题型计算题库（答案经程序核验）
    共 3460 题，由 _gen_quiz2.js 生成，注册进 X580Quiz。
    ============================================================ */
 (function(){
@@ -17306,7 +17306,7 @@ window.X580_AI_REG([
 
 /* ===== X580/581 fragment: patch580_extra.js ===== */
 /* ============================================================
-   X580 · 10.1.2 核心补充（extra）
+   X580 · 10.1.3 核心补充（extra）
    1. 本周作息 / 精力规划（按天、按周安排，不切碎）
    2. 通用“返回主菜单”（二次确认，不丢存档）
    3. 手机端“放大阅读”（弹窗文字一键全屏放大）
@@ -17542,7 +17542,7 @@ window.X580_AI_REG([
 
 /* ===== X580/581 fragment: patch581_core.js ===== */
 /* ============================================================
-   X581 · 10.1.2 PRO 联动大版本 · 核心层
+   X581 · 10.1.3 PRO 联动大版本 · 核心层
    命名空间 / 通用弹窗 / 版本对齐 / 歌曲卡修复 / 主题适配
    ============================================================ */
 (function () {
@@ -17751,22 +17751,22 @@ window.X580_AI_REG([
   X581.title = function (t) {
     document.title = t;
     var hv = document.getElementById("heroVersion");
-    if (hv) hv.textContent = "Version 10.1.2 PRO";
+    if (hv) hv.textContent = "Version 10.1.3 PRO";
   };
 
   /* ---------- 版本对齐 ---------- */
   function forceVersion() {
     try {
-      window.XZ_VER = "10.1.2 PRO";
-      document.title = "杭州西子实验学校模拟器 10.1.2 PRO";
+      window.XZ_VER = "10.1.3 PRO";
+      document.title = "杭州西子实验学校模拟器 10.1.3 PRO";
       var hv = document.getElementById("heroVersion");
-      if (hv) hv.textContent = "Version 10.1.2 PRO";
+      if (hv) hv.textContent = "Version 10.1.3 PRO";
       var list = document.querySelectorAll(".x56-badge,.hero-version,.version-tag,.hero-badge");
       for (var i = 0; i < list.length; i++) {
         var t = list[i].textContent;
         if (/5\.[0-9]/.test(t)) {
-          if (/心之所向/.test(t) || /badge/i.test(list[i].className)) list[i].textContent = "10.1.2 PRO 心之所向";
-          else if (/^Version/.test(t)) list[i].textContent = "Version 10.1.2 PRO";
+          if (/心之所向/.test(t) || /badge/i.test(list[i].className)) list[i].textContent = "10.1.3 PRO 心之所向";
+          else if (/^Version/.test(t)) list[i].textContent = "Version 10.1.3 PRO";
         }
       }
       /* 仅在开始页兜底纯版本号文本 */
@@ -17775,7 +17775,7 @@ window.X580_AI_REG([
         var ss = st.querySelectorAll("span,div,small,em");
         for (var j = 0; j < ss.length; j++) {
           var e = ss[j];
-          if (e.children.length === 0 && /^Version\s*5\.7\.0/i.test(e.textContent)) e.textContent = "Version 10.1.2 PRO";
+          if (e.children.length === 0 && /^Version\s*5\.7\.0/i.test(e.textContent)) e.textContent = "Version 10.1.3 PRO";
         }
       }
     } catch (e) {}
@@ -17905,7 +17905,7 @@ window.X580_AI_REG([
 
 /* ===== X580/581 fragment: patch581_wire.js ===== */
 /* ============================================================
-   X581 · 10.1.2 PRO · 校园中心 53 格全部接通
+   X581 · 10.1.3 PRO · 校园中心 53 格全部接通
    每个 data-act 都打开真实可用面板（消除"模块未就绪"）
    可被联动导演引擎复用（X581.Campus.xxx）
    ============================================================ */
@@ -17944,7 +17944,7 @@ window.X580_AI_REG([
       card("怎么玩", "每天按作息表推进：起床、早读、上午五节课、午饭、午休、下午四节课、晚自习、熄灯。点击场景按钮或下方功能格即可行动；各种系统会在合适的时段<strong>主动弹出</strong>。") +
       card("新手三步", "① 开始游戏→选模式（自由/老师/剧情）→创建角色；② 上课认真、回答问题、完成小测提升学习；③ 注意体力、心情和无聊值，太低会犯困、心情下降。") +
       card("常见问题", "· 字太小：任意弹窗右上角 🔍 可全屏放大<br>· 找不到功能：右下角🧰工具箱 / 校园中心+<br>· 没体力：吃饭、睡觉、午休恢复<br>· 想回开始页：🧰→🏠返回主菜单") +
-      card("10.1.2 PRO 新特性", "✅ 校园中心 53 项全部可玩<br>✅ 日常事件主动联动（天气/穿搭/食堂/课堂/课间/新闻）<br>✅ 三模式 + 老师模式回归<br>✅ 个人主页 / 课表 / Buff / 无聊值<br>✅ 自动存档 + 继续游戏"));
+      card("10.1.3 PRO 新特性", "✅ 校园中心 53 项全部可玩<br>✅ 日常事件主动联动（天气/穿搭/食堂/课堂/课间/新闻）<br>✅ 三模式 + 老师模式回归<br>✅ 个人主页 / 课表 / Buff / 无聊值<br>✅ 自动存档 + 继续游戏"));
   };
 
   /* ============ 关于本游戏 ============ */
@@ -17957,7 +17957,7 @@ window.X580_AI_REG([
     var qc = window.X580Quiz ? X580Quiz.count() : 0;
     var ai = window.X580_AI_INTENTS ? X580_AI_INTENTS.length : 0;
     screen("x581SubAbout", "🏷️ 关于本游戏",
-      card("杭州西子实验学校模拟器", "版本 <b>10.1.2 PRO「联动」</b><br>纯单文件 HTML / CSS / JS / Canvas，无任何外部依赖，可离线游玩。") +
+      card("杭州西子实验学校模拟器", "版本 <b>10.1.3 PRO「联动」</b><br>纯单文件 HTML / CSS / JS / Canvas，无任何外部依赖，可离线游玩。") +
       stat +
       card("内容自检", "课堂题库：<b>" + qc + "</b> 道真实题<br>AI 对话意图：<b>" + ai + "</b> 个<br>校园中心：<b>53</b> 项可玩模块<br>小游戏：从游戏中心/快速开玩进入") +
       card("作者", "Laerrus. 出品<br>感谢 不呐呐、拜拜武德充沛、千屿、陈奕中、m4 等同学的支持。"));
@@ -18760,7 +18760,7 @@ window.X580_AI_REG([
 
 /* ===== X580/581 fragment: patch581_director.js ===== */
 /* ============================================================
-   X581 · 10.1.2 PRO · 联动事件导演引擎（核心）
+   X581 · 10.1.3 PRO · 联动事件导演引擎（核心）
    按早/上课/课间/午/晚时间轴，主动且不重叠地调用已有系统：
    天气/新闻/穿搭/食堂/小卖部/课堂提问/恋爱AI/希沃/唱歌/
    手机/运动会/成就/快递/医务室/起义军/犯困/新闻
@@ -19231,7 +19231,7 @@ window.X580_AI_REG([
 
 /* ===== X580/581 fragment: patch581_modes.js ===== */
 /* ============================================================
-   X581 · 10.1.2 PRO · 三模式 + 老师回归 + 身高体重 + 班级类型
+   X581 · 10.1.3 PRO · 三模式 + 老师回归 + 身高体重 + 班级类型
    ============================================================ */
 (function () {
   if (window.__X581_MODES__) return;
@@ -19604,7 +19604,7 @@ window.X580_AI_REG([
 
 /* ===== X580/581 fragment: patch581_intro.js ===== */
 /* ============================================================
-   X581 · 10.1.2 PRO · 片头体验 + 自动存档 + 续玩 + 搭校动画 + 预告 + Buff
+   X581 · 10.1.3 PRO · 片头体验 + 自动存档 + 续玩 + 搭校动画 + 预告 + Buff
    ============================================================ */
 (function () {
   if (window.__X581_INTRO__) return;
@@ -19772,7 +19772,7 @@ window.X580_AI_REG([
       '<p class="x581-rv-p">它当然不完美——代码带着迭代的痕迹，性能也还有打磨空间——但它的野心、细节和温度，' +
       '已经远远超过一个学生作业的体量。Laerrus.，你不是在写游戏，你是在给自己的中学时代，造一座可以反复走进去的学校。' +
       '继续做下去，这件事本身就很酷。</p>' +
-      '<div class="x581-rv-sign">—— 10.1.2 PRO「心之所向」 · 感谢 不呐呐、拜拜武德充沛、千屿、陈奕中、m4 等同学的一路支持</div>';
+      '<div class="x581-rv-sign">—— 10.1.3 PRO「心之所向」 · 感谢 不呐呐、拜拜武德充沛、千屿、陈奕中、m4 等同学的一路支持</div>';
     start.appendChild(box);
   }
   function startCountdown(mode) {
