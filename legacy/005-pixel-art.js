@@ -1,0 +1,1 @@
+var PIX_B64=['legacy/media/pix/00.png','legacy/media/pix/01.png','legacy/media/pix/02.png','legacy/media/pix/03.png','legacy/media/pix/04.png','legacy/media/pix/05.png','legacy/media/pix/06.png','legacy/media/pix/07.png'];

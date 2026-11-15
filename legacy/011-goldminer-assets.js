@@ -1,0 +1,1 @@
+var GM_ASSETS={"goldbar":"legacy/inline/b2941c5b66ed2e32.png","diamond":"legacy/inline/fe44ec9c3a1fabbf.png","moneybag":"legacy/inline/2faf52df18769a90.png","goldnugget":"legacy/inline/552cce38146f0176.png"};
