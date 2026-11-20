@@ -3247,7 +3247,17 @@ function bgmLoad(){
  }catch(e){}
 }
 function bgmSave(){try{localStorage.setItem(BGM_KEY,JSON.stringify({on:BGM_ON,idx:BGM_IDX,vol:BGM_VOL}));}catch(e){}}
-function bgmPlay(){try{BGM_AUD.play();}catch(e){}bgmRender();}
+/* 10.1.5：播放时才挂 src。
+   原来 bgmInit 里直接 preload='auto' + 设 src，等于**一进站就下整首 4~5 MB 的 BGM**，
+   而且大多数人当时还没解锁（音乐是锁着的）—— 白下，还把首屏带宽挤掉了。 */
+function bgmPlay(){
+ try{
+  if(BGM_AUD){
+   if(!BGM_AUD.getAttribute('src'))BGM_AUD.src=bgmSrc(BGM_B64[BGM_IDX]);
+   if(BGM_AUD.preload==='none')BGM_AUD.preload='auto';
+  }
+ }catch(e){}
+ try{BGM_AUD.play();}catch(e){}bgmRender();}
 function bgmPause(){try{BGM_AUD.pause();}catch(e){}bgmRender();}
 function bgmToggle(){
  BGM_ON=!BGM_ON;
@@ -3315,8 +3325,8 @@ function bgmInit(){
  bgmLoad();
  try{
   BGM_AUD=document.createElement('audio');
-  BGM_AUD.preload='auto';BGM_AUD.volume=BGM_VOL;
-  BGM_AUD.src=bgmSrc(BGM_B64[BGM_IDX]);
+  BGM_AUD.preload='none';BGM_AUD.volume=BGM_VOL;
+  /* 10.1.5：不在这里挂 src —— 等用户真的按播放（bgmPlay 会补上）或解锁后再挂 */
   BGM_AUD.addEventListener('ended',function(){bgmSwitch((BGM_IDX+1)%BGM_LIST.length);});
   document.body.appendChild(BGM_AUD);
   var once=function(){
@@ -5166,7 +5176,7 @@ try{lyricUpdate();}catch(e){}
    title.style.cssText='position:relative;z-index:2;text-align:center;margin-bottom:40px;animation:titleFadeIn 1.2s ease-out';
    title.innerHTML='<div style="font-size:56px;font-weight:900;color:#fff;text-shadow:0 4px 20px rgba(0,0,0,.8),0 0 40px rgba(124,156,255,.4);letter-spacing:4px">杭州西子实验学校</div>'+
     '<div style="font-size:32px;font-weight:700;color:#ffd166;text-shadow:0 2px 10px rgba(0,0,0,.6);margin-top:8px;letter-spacing:8px">模拟器</div>'+
-    '<div style="font-size:16px;color:rgba(255,255,255,.6);margin-top:12px;letter-spacing:2px">Version 10.1.4 PRO</div>';
+    '<div style="font-size:16px;color:rgba(255,255,255,.6);margin-top:12px;letter-spacing:2px">Version 10.1.5 PRO</div>';
    splash.appendChild(title);
    /* 按钮组 */
    var btnGroup=document.createElement('div');
@@ -7110,7 +7120,7 @@ function Q_prev(){bgmSwitch((BGM_IDX-1+BGM_LIST.length)%BGM_LIST.length);setTime
    ================================================================ */
 var XZ561={ver:'5.5.6.888'};
 window.XZ_NEW_START=true; /* 通知旧代码：使用新版主视觉开始界面 */
-window.XZ_VER='10.1.4 PRO';
+window.XZ_VER='10.1.5 PRO';
 
 /* ================================================================
    ① 上课铃 / 下课铃（bell_src.m4a，纯本地，无网络请求）
