@@ -45,7 +45,7 @@
 
   /* ---------- 模块注册 / 启动（单例，逐个跑，错误隔离） ---------- */
   var X570 = {
-    ver: "10.1.9 PRO",
+    ver: "10.2.0 PRO",
     name: "心之所向 · PRO 收官",
     modules: [],
     register: function (name, fn, stage) { this.modules.push({ name: name, fn: fn, done: false, error: null, stage: stage || 0 }); },
@@ -452,7 +452,7 @@
     var box = document.createElement("div");
     box.id = "x570Toolbox";
     box.innerHTML =
-      '<div class="x570-tb-head"><b>🧰 工具箱</b><span style="font-size:12px;opacity:.6">10.1.9 PRO</span></div>' +
+      '<div class="x570-tb-head"><b>🧰 工具箱</b><span style="font-size:12px;opacity:.6">10.2.0 PRO</span></div>' +
       '<div class="x570-tb-grid" id="x570TbGgrid"></div>';
     document.body.appendChild(box);
     var grid = $("x570TbGgrid");
@@ -15047,8 +15047,8 @@
 
   /* 统一对外版本号：本层最后加载，强制锁定为 5.7.0（覆盖旧层里散落的 XZ_VER 赋值） */
   try {
-    window.XZ_VER = "10.1.9 PRO";
-    var setVer = function () { try { window.XZ_VER = "10.1.9 PRO"; } catch (e) {} };
+    window.XZ_VER = "10.2.0 PRO";
+    var setVer = function () { try { window.XZ_VER = "10.2.0 PRO"; } catch (e) {} };
     setVer();
     setTimeout(setVer, 500);
     setTimeout(setVer, 2000);
