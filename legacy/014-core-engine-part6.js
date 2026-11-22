@@ -5176,7 +5176,7 @@ try{lyricUpdate();}catch(e){}
    title.style.cssText='position:relative;z-index:2;text-align:center;margin-bottom:40px;animation:titleFadeIn 1.2s ease-out';
    title.innerHTML='<div style="font-size:56px;font-weight:900;color:#fff;text-shadow:0 4px 20px rgba(0,0,0,.8),0 0 40px rgba(124,156,255,.4);letter-spacing:4px">杭州西子实验学校</div>'+
     '<div style="font-size:32px;font-weight:700;color:#ffd166;text-shadow:0 2px 10px rgba(0,0,0,.6);margin-top:8px;letter-spacing:8px">模拟器</div>'+
-    '<div style="font-size:16px;color:rgba(255,255,255,.6);margin-top:12px;letter-spacing:2px">Version 10.9.11 PRO</div>';
+    '<div style="font-size:16px;color:rgba(255,255,255,.6);margin-top:12px;letter-spacing:2px">Version 10.9.12 PRO</div>';
    splash.appendChild(title);
    /* 按钮组 */
    var btnGroup=document.createElement('div');
@@ -7120,7 +7120,7 @@ function Q_prev(){bgmSwitch((BGM_IDX-1+BGM_LIST.length)%BGM_LIST.length);setTime
    ================================================================ */
 var XZ561={ver:'5.5.6.888'};
 window.XZ_NEW_START=true; /* 通知旧代码：使用新版主视觉开始界面 */
-window.XZ_VER='10.9.11 PRO';
+window.XZ_VER='10.9.12 PRO';
 
 /* ================================================================
    ① 上课铃 / 下课铃（bell_src.m4a，纯本地，无网络请求）
