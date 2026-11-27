@@ -4,6 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <title>杭州西子实验学校模拟器PRO</title>
+<!-- 10.9.29：字体预加载。三套字体是首屏最大的一笔，不 preload 的话要等 CSS
+     解析完才发现要下载，`font-display:swap` 会先拿系统字体画一遍；网慢/冷缓存时
+     肉眼看到的就是「自带字体没加载」。
+     10.9.29 只预加载首屏真正用到的两套：
+       · xz-main（正文，1.7MB）——必用
+       · xz-mao（大标题，1.0MB）——首屏标题就是它
+       Genshin（数字/HUD，1.1MB）首屏用不到，实测登录页/落地页首屏平台字体里
+       只有 WenKai 与 MaoCao，所以不 preload、等真用到再按需下载，
+       省下 1.1MB 和主字体抢带宽。 -->
+<link rel="preload" href="fonts/xz-main.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/xz-mao.woff2" as="font" type="font/woff2" crossorigin>
   <script type="module" crossorigin src="./assets/index.js"></script>
   <link rel="stylesheet" crossorigin href="./assets/style.css">
 </head>
@@ -715,7 +726,7 @@
 
 <!-- [X590-OPT] 开始按钮原生兜底：不依赖任何游戏内定时器，确保按钮出现且可点 -->
 
-
+
   <script src="legacy/001-core-engine.js"></script>
   <script src="legacy/002-opening-video.js"></script>
   <script src="legacy/003-bgm-playlist.js"></script>
