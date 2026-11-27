@@ -1,0 +1,33 @@
+# Cloudflare Pages / Netlify 的缓存头（GitHub Pages 不认这个文件，忽略即可）
+#
+# 10.9.28 起托管用「分流构建」：index.html 很小、CSS/JS 带 hash。
+# 有了下面这些头，第二次访问基本只花 index.html（几 KB + 304）。
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+
+# 入口绝不缓存，保证每次拿到最新版本号
+/index.html
+  Cache-Control: no-cache, must-revalidate
+
+# Vite 产物带 hash，可以一年不变
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# 字体/模型/视频同理（文件名里带 xz- 前缀或版本号）
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+/models/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# 引擎 46 个经典脚本文件名不带 hash，但发版时整体替换，
+# 给 7 天 + 允许 stale 回源，比 GitHub Pages 默认的 600 秒强得多
+/legacy/*.js
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+# 媒体按需拉取，缓存久一点（内容改了会换文件名）
+/legacy/media/*
+  Cache-Control: public, max-age=2592000
+/assets/*.mp4
+  Cache-Control: public, max-age=2592000
