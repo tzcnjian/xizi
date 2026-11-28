@@ -6,12 +6,12 @@
   window.X590 = window.X590 || {};
   window.X590.ASSETS = {
     /* calligraphy transparent PNG */
-    title: 'legacy/inline/da561cd78601da78.png',
-    start: 'legacy/inline/310279f021f3a4c6.png',
-    maker: 'legacy/inline/738557851267f9a2.png',
-    ver: 'legacy/inline/97c1dff78a0f851a.png',
-    poem: 'legacy/inline/415ddbf9320262bb.png',
-    xizi: 'legacy/inline/6418d4b92201de08.png',
+    title: 'legacy/inline/da561cd78601da78.webp',
+    start: 'legacy/inline/310279f021f3a4c6.webp',
+    maker: 'legacy/inline/738557851267f9a2.webp',
+    ver: 'legacy/inline/97c1dff78a0f851a.webp',
+    poem: 'legacy/inline/415ddbf9320262bb.webp',
+    xizi: 'legacy/inline/6418d4b92201de08.webp',
     /* real photos */
     aerial_main: 'legacy/inline/bfa9d6f077c4c776.jpg',
     school_gate: 'legacy/inline/fc36f65d8910df7f.jpg',
