@@ -835,9 +835,10 @@
   <script src="legacy/040-x570img-asset-3.js"></script>
   <script src="legacy/041-x570img-asset-4.js"></script>
   <script src="legacy/042-x570-patch-js-part2.js"></script>
-  <script src="legacy/043-xz580js.js"></script>
+  <script type="text/plain" data-xz-lazy="legacy/043-xz580js.js"></script>
   <script src="legacy/044-x590-js.js"></script>
   <script src="legacy/045-script-23.js"></script>
   <script src="legacy/046-script-24.js"></script>
+  <script>(function(){var state=0,waiters=[];function finish(){state=2;var fns=waiters.splice(0);for(var i=0;i<fns.length;i++){try{fns[i]()}catch(e){}}}function load(){if(state)return;var nodes=[].slice.call(document.querySelectorAll("script[data-xz-lazy]"));if(!nodes.length){state=2;finish();return}state=1;var left=nodes.length;function tick(){if(--left<=0)finish()}for(var i=0;i<nodes.length;i++){(function(el){var s=document.createElement("script");s.async=false;s.src=el.getAttribute("data-xz-lazy");s.onload=tick;s.onerror=function(){el.setAttribute("data-xz-lazy-error","1");tick()};el.parentNode.insertBefore(s,el.nextSibling)})(nodes[i])}}window.__xzLoadLegacy=load;window.__xzLegacyReady=function(fn){if(state===2){try{fn()}catch(e){}}else waiters.push(fn)};var types=["pointerdown","touchstart","keydown","wheel"];for(var t=0;t<types.length;t++){document.addEventListener(types[t],load,{capture:true,once:true,passive:true})}setTimeout(load,60000)})()</script>
 </body>
 </html>
